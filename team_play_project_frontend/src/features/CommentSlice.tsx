@@ -1,15 +1,20 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-// import { RootState } from "../app/store";
 
+// Интерфейс для комментариев
 export interface Comment {
-  user: string;
+  user: {
+    user: string,
+    email: string,
+    avatarURL: string
+  },
   email: string;
   text: string;
   _id: string;
   post: string;
 }
 
+// Интерфейс состояния комментариев
 export interface CommentState {
   comments: Comment[];
   status: "idle" | "loading" | "succeeded" | "failed";
@@ -27,6 +32,7 @@ interface AddCommentArgs {
   text: string;
 }
 
+// Создание асинхронного Thunk-экшена для добавления комментария
 export const addComment = createAsyncThunk(
   "comments/addComment",
   async ({ postId, text }: AddCommentArgs, thunkAPI) => {
@@ -36,6 +42,7 @@ export const addComment = createAsyncThunk(
         throw new Error("Authentication token is missing.");
       }
 
+      // Отправка POST-запроса на сервер для добавления комментария
       const response = await axios.post(
         `http://localhost:9000/comment/${postId}`,
         { text },
@@ -50,6 +57,7 @@ export const addComment = createAsyncThunk(
         throw new Error("Server error");
       }
 
+      // Возвращение данных комментария после успешного добавления
       const data = response.data;
       return data;
     } catch (error) {
@@ -62,16 +70,19 @@ export const addComment = createAsyncThunk(
   }
 );
 
+// Создание асинхронного Thunk-экшена для загрузки комментариев
 export const fetchComments = createAsyncThunk(
   "comments/fetchComments",
   async (_, thunkAPI) => {
     try {
+      // Запрос на сервер для загрузки комментариев
       const response = await axios.get("http://localhost:9000/comments");
 
       if (response.status !== 200) {
         throw new Error("Server error");
       }
 
+      // Возвращение загруженных данных комментариев
       const data = response.data;
       return data;
     } catch (error) {
@@ -84,6 +95,7 @@ export const fetchComments = createAsyncThunk(
   }
 );
 
+// Создание среза (slice) для управления состоянием комментариев
 const commentSlice = createSlice({
   name: "comments",
   initialState,
@@ -91,26 +103,32 @@ const commentSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchComments.pending, (state) => {
+        // Обработка начала загрузки комментариев
         state.status = "loading";
         state.error = null;
       })
       .addCase(fetchComments.fulfilled, (state, action) => {
+        // Обработка успешной загрузки комментариев
         state.status = "succeeded";
         state.comments = action.payload;
       })
       .addCase(fetchComments.rejected, (state, action) => {
+        // Обработка ошибки при загрузке комментариев
         state.status = "failed";
         state.error = action.payload as string;
       })
       .addCase(addComment.pending, (state) => {
+        // Обработка начала добавления комментария
         state.status = "loading";
         state.error = null;
       })
       .addCase(addComment.fulfilled, (state, action) => {
+        // Обработка успешного добавления комментария
         state.status = "succeeded";
         state.comments.push(action.payload);
       })
       .addCase(addComment.rejected, (state, action) => {
+        // Обработка ошибки при добавлении комментария
         state.status = "failed";
         state.error = action.payload as string;
       });
