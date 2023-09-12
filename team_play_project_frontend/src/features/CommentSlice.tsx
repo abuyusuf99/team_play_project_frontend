@@ -35,7 +35,7 @@ interface AddCommentArgs {
 // Создание асинхронного Thunk-экшена для добавления комментария
 export const addComment = createAsyncThunk(
   "comments/addComment",
-  async ({ postId, text }: AddCommentArgs, thunkAPI) => {
+  async ({ postId, text }: AddCommentArgs, thunkAPInpm) => {
     try {
       const token = localStorage.getItem("token");
       if (!token) {
