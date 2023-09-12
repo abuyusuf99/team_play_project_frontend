@@ -18,11 +18,9 @@ export interface CommentState {
 }
 
 const initialState = {
-  SignIn: null,
+  loged: null,
   authSignUp: null,
   error: null,
-  signingUp: false,
-  signingIn: false,
   token: localStorage.getItem("token"),
 };
 
@@ -54,11 +52,12 @@ export const createUser = createAsyncThunk(
   }
 );
 
-export const SignIn = createAsyncThunk<string, User>(
-  "auth/signIn",
+//фетч логин
+export const authlogin = createAsyncThunk<string, User>(
+  "auth/login",
   async ({ login, password }: User, thunkAPI) => {
     try {
-      const res = await axios.post("http://localhost:4000/user", {
+      const res = await fetch("http://localhost:4000/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -73,7 +72,7 @@ export const SignIn = createAsyncThunk<string, User>(
       }
       localStorage.setItem("token", token);
     } catch (e) {
-      thunkAPI.rejectWithValue(e + 'asdasdasd');
+      thunkAPI.rejectWithValue(e);
     }
   }
 );
@@ -86,27 +85,26 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(createUser.pending, (state) => {
-        state.createUser = true;
+        state.createUser = false;
       })
       .addCase(createUser.rejected, (state, action) => {
         state.createUser = false;
-
         state.error = action.payload;
       })
       .addCase(createUser.fulfilled, (state) => {
-        state.createUser = false;
+        state.createUser = true;
         state.error = null;
       })
-      .addCase(SignIn.pending, (state) => {
-        state.SignIn = true;
+      .addCase(authlogin.pending, (state) => {
+        state.loged = false;
       })
-      .addCase(SignIn.rejected, (state, action) => {
-        state.SignIn = true;
+      .addCase(authlogin.rejected, (state, action) => {
+        state.loged = false;
+        state.error = action.payload
 
-        state.error = action.payload;
       })
-      .addCase(SignIn.fulfilled, (state, action) => {
-        state.SignIn = true;
+      .addCase(authlogin.fulfilled, (state, action) => {
+        state.loged = true;
         state.error = null;
 
         state.token = action.payload;
