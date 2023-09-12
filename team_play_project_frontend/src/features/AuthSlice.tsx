@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import bcrypt from "bcrypt"
 
 // Интерфейс для комментариев
 export interface User {
@@ -30,24 +31,25 @@ export const createUser = createAsyncThunk(
   "user/createUser",
   async ({ login, password, nickName, avatarURL }: User, thunkAPI) => {
     try {
-      // Отправка POST-запроса на сервер для добавления комментария
-      const res = await axios.post(`http://localhost:4000/user}`, {
+        console.log(login,password,nickName, avatarURL);
+      const res = await fetch(`http://localhost:4000/user`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ login, password, nickName, avatarURL }),
+        body: JSON.stringify({ login:login, password:password, nickName:nickName, avatarURL:avatarURL}),
       });
 
-      const token = await res.json();
-      console.log(token);
-
-      if (token.error) {
-        return thunkAPI.rejectWithValue(token.error);
+      const json = await res.json()
+      if(json.error){
+        return thunkAPI.rejectWithValue(json.error)
       }
-      return res.json("Авторизация прошла успешно");
+      return json
+    //   return res.json("Авторизация прошла успешно");
     } catch (e) {
-      thunkAPI.rejectWithValue(e);
+        console.log("ошибка fetch");
+        
+      thunkAPI.rejectWithValue(e + '12314134');
     }
   }
 );
@@ -56,7 +58,7 @@ export const SignIn = createAsyncThunk<string, User>(
   "auth/signIn",
   async ({ login, password }: User, thunkAPI) => {
     try {
-      const res = await axios.post(`http://localhost:4000/login}`, {
+      const res = await axios.post("http://localhost:4000/user", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -71,7 +73,7 @@ export const SignIn = createAsyncThunk<string, User>(
       }
       localStorage.setItem("token", token);
     } catch (e) {
-      thunkAPI.rejectWithValue(e);
+      thunkAPI.rejectWithValue(e + 'asdasdasd');
     }
   }
 );
