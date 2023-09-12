@@ -23,8 +23,7 @@ function HomePage() {
         {posts.map((post) => (
           <Post
             key={post._id} // Предполагается, что у постов есть уникальный идентификатор (например, _id)
-            title={post.title}
-            text={post.text}
+            desc={post.desc}
             imageURL={post.imageURL} // Добавьте свойство для изображения, если есть
             link={`/fullpost/${post._id}`} // Предполагается, что вы хотите перейти к полному посту с идентификатором
           />
