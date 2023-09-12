@@ -7,9 +7,13 @@ export interface Post {
   imageURL: string;
   title: string;
   text: string;
-  tags: string[];
+  desc: string;
   category: string;
+  viewsCount: number; // Изменили тип на number
+  document: string;
+  postId: string
 }
+
 
 export interface PostState {
   posts: Post[];
@@ -28,6 +32,32 @@ const initialState: PostState = {
   status: "idle",
   error: null,
 };
+export const fetchTopPosts = createAsyncThunk(
+  "posts/fetchTopPosts",
+  async () => {
+    try {
+      const response = await axios.get("http://localhost:4000/post/top", {
+        params: {
+          limit: 3, // Получение топ 3 постов
+        },
+      });
+
+      if (response.status !== 200) {
+        throw new Error("Server error");
+      }
+
+      const data = response.data;
+      return data;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      } else {
+        throw new Error("Unexpected error");
+      }
+    }
+  }
+);
+
 
 export const createPost = createAsyncThunk(
   "posts/createPost",
@@ -149,6 +179,18 @@ const postSlice = createSlice({
       .addCase(createPost.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.posts.unshift(action.payload);
+      })
+      .addCase(fetchTopPosts.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(fetchTopPosts.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.posts = action.payload;
+      })
+      .addCase(fetchTopPosts.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload as string;
       });
   },
 });
