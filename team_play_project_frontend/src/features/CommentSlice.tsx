@@ -35,7 +35,8 @@ interface AddCommentArgs {
 // Создание асинхронного Thunk-экшена для добавления комментария
 export const addComment = createAsyncThunk(
   "comments/addComment",
-  async ({ postId, text }: AddCommentArgs, thunkAPI) => {
+  async ({ postId, text }: AddCommentArgs) => {
+
     try {
       const token = localStorage.getItem("token");
       if (!token) {
@@ -73,7 +74,7 @@ export const addComment = createAsyncThunk(
 // Создание асинхронного Thunk-экшена для загрузки комментариев
 export const fetchComments = createAsyncThunk(
   "comments/fetchComments",
-  async (_, thunkAPI) => {
+  async (_) => {
     try {
       // Запрос на сервер для загрузки комментариев
       const response = await axios.get("http://localhost:9000/comments");

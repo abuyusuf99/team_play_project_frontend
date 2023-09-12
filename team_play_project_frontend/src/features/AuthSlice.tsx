@@ -77,7 +77,7 @@ export const SignIn = createAsyncThunk<string, User>(
 );
 
 // Создание среза (slice) для управления состоянием комментариев
-const commentSlice = createSlice({
+const authSlice = createSlice({
   name: "AuthSlice",
   initialState,
   reducers: {},
@@ -112,4 +112,4 @@ const commentSlice = createSlice({
   },
 });
 
-export default commentSlice.reducer;
+export default authSlice.reducer;
