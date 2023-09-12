@@ -36,6 +36,7 @@ interface AddCommentArgs {
 export const addComment = createAsyncThunk(
   "comments/addComment",
   async ({ postId, text }: AddCommentArgs) => {
+
     try {
       const token = localStorage.getItem("token");
       if (!token) {
