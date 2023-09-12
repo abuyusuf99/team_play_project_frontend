@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 interface PostProps {
   title: string;
-  text: string;
   imageURL: string;
   desc: string;
   document: string;
@@ -18,8 +17,8 @@ const Post: React.FC<PostProps> = ({ desc, document, title, imageURL, link, view
       <img src={imageURL} alt="*"/>
       <h1 >{title}</h1>
       <p>{desc}</p>
-      <p>{viewsCount}</p>
       <p>{document}</p>
+      <p>Просмотры: {viewsCount}</p>
       <Link to={link}>Читать</Link>
     </div>
   );
