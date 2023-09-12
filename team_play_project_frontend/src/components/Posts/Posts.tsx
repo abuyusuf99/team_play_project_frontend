@@ -1,21 +1,26 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import style from './Post.module.css';
+// import style from './Post.module.css';
 
 interface PostProps {
   title: string;
   text: string;
   imageURL: string;
+  desc: string;
+  document: string;
   link: string;
+  viewsCount: number
 }
 
-const Post: React.FC<PostProps> = ({ title, text, imageURL, link }) => {
+const Post: React.FC<PostProps> = ({ desc, document, title, imageURL, link, viewsCount}) => {
   return (
-    <div className={style.block}>
-      <img className={style.img} src={imageURL} alt="*"/>
-      <h1 className={style.title}>{title}</h1>
-      <p className={style.text}>{text}</p>
-      <Link to={link}>к новости</Link>
+    <div >
+      <img src={imageURL} alt="*"/>
+      <h1 >{title}</h1>
+      <p>{desc}</p>
+      <p>{viewsCount}</p>
+      <p>{document}</p>
+      <Link to={link}>Читать</Link>
     </div>
   );
 };

@@ -17,7 +17,7 @@ const TopThree: React.FC<PostProps> = ({ title, text, imageURL, link }) => {
       <img className={style.img} src={imageURL} alt="*"/>
       <h1 className={style.title}>{title}</h1>
       <p className={style.text}>{text}</p>
-      <Link to={link}>к новости</Link>
+      <Link to={link}>к тексту</Link>
     </div>
   );
 };
