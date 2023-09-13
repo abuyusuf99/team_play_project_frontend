@@ -1,23 +1,25 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import style from './Post.module.css';
-import { RootState } from '../../app/store';
-import { useSelector } from 'react-redux';
-interface PostProps {
-  title: string;
-  text: string;
-  imageURL: string;
-  link: string;
-}
-
-const TopThree: React.FC<PostProps> = ({ title, text, imageURL, link }) => {
-    const posts = useSelector((state: RootState) => state.postReducer.posts);
+import React from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../app/store";
+import { Link } from "react-router-dom";
+const TopThree: React.FC = () => {
+  const posts = useSelector((state: RootState) =>
+    state.postReducer.posts
+      .slice()
+      .sort((a, b) => b.viewsCount - a.viewsCount)
+      .slice(0, 3)
+  );
   return (
-    <div className={style.block}>
-      <img className={style.img} src={imageURL} alt="*"/>
-      <h1 className={style.title}>{title}</h1>
-      <p className={style.text}>{text}</p>
-      <Link to={link}>к новости</Link>
+    <div>
+      {posts.map((post) => (
+        <div key={post._id}>
+          <img src={post.imageURL} alt="*" />
+          <h1>{post.title}</h1>
+          <p>{post.text}</p>
+          <p> ПРОСМОТРЫ: {post.viewsCount}</p>
+          <Link to={`/fullpost/${post._id}`}>к тексту</Link>
+        </div>
+      ))}
     </div>
   );
 };
