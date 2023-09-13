@@ -25,33 +25,25 @@ function AddPost() {
   const handleAdd = () => {
     category.find((item) => {
       if (item.title === categ) {
-        dispatch(
-          createPost({
-            title: titl,
-            desc: desc,
-            category: item._id,
-            imageURL: imgRef,
-          })
-        );
+        dispatch(createPost({title:titl,desc:desc,category:item._id,imageURL:imgRef}))
+
       }
     });
   };
 
-  const handleChangeFile = async (event) => {
-    try {
-      const formData = new FormData();
-      const file = event.target.files[0];
-      formData.append("image", file);
-      const { data } = await axios.post(
-        "http://localhost:4000/upload",
-        formData
-      );
-      console.log(data);
-    } catch (error) {
-      error;
-    }
-  };
-  // kdf
+  const handleChangeFile = async (event)=>{
+try {
+  const formData = new FormData()
+  const file =  event.target.files[0]
+  formData.append('image', file)
+  const { data} = await axios.post('http://localhost:4000/upload/img', formData)
+  console.log(data);
+  
+} catch (error) {
+  console.log(error.message)
+}
+  }
+// kdf
   return (
     <>
       <div className={style.rod_block_addpost}>
@@ -104,12 +96,7 @@ function AddPost() {
           </div>
           <div className={style.input}>
             {" "}
-            <input
-              onChange={handleChangeFile}
-              ref={imgRef}
-              type="file"
-              hidden
-            />
+            <input onChange={handleChangeFile} ref={imgRef} type="file" hidden />
           </div>
         </div>
         <div className={style.drop}>
@@ -121,7 +108,11 @@ function AddPost() {
           </button>
         </div>
         <div className={style.addBut}>
-          <button onClick={handleAdd}>Добавить</button>
+          <button
+            onClick={handleAdd}
+          >
+            Добавить
+          </button>
         </div>
       </div>
     </>
