@@ -1,14 +1,13 @@
 // import React from "react";
 import TopThree from "../../components/TopThree/TopThree";
 import Post from "../../components/Posts/Posts";
-import "../../index.css";
 
 function HomePage() {
   return (
     <div className="bg-gray-100 min-h-screen">
       <header className="bg-blue-500 text-white py-4">
         <div className="container mx-auto">
-          <h1 className="text-3xl font-semibold">Лучшие посты</h1>
+          <h1 className="text-12312312xl font-semibold">Лучшие посты</h1>
         </div>
       </header>
       <div className="container mx-auto py-8">

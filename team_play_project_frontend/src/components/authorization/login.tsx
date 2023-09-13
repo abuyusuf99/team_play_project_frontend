@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { authlogin } from "../../features/AuthSlice";
-
+import { AppDispatch } from "../../app/store";
 function signIn() {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");

@@ -32,7 +32,7 @@ function CommentList({ postId }: CommentProps) {
               </div>
               <div>
                 <div>
-                  <strong>{comment.user.email}</strong>
+                  <strong>{comment.user.nickName}</strong>
                 </div>
                 <div>{comment.text}</div>
               </div>

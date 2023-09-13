@@ -1,0 +1,37 @@
+/* TopThree.module.css */
+
+.container {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .post {
+    width: 30%; /* Ширина 30% экрана */
+    padding: 16px; /* Отступы вокруг поста */
+    border: 1px solid #ccc; /* Граница для разделения постов */
+  }
+  
+  .post img {
+    max-width: 100%; /* Изображение не выходит за границы поста */
+    height: auto; /* Автоматический расчет высоты */
+  }
+  
+  .post h1 {
+    font-size: 20px; /* Размер заголовка */
+    margin: 8px 0; /* Вертикальные отступы для заголовка */
+  }
+  
+  .post p {
+    font-size: 14px; /* Размер текста */
+    margin: 8px 0; /* Вертикальные отступы для текста */
+  }
+  
+  .post .views {
+    font-weight: bold; /* Жирный шрифт для количества просмотров */
+  }
+  
+  .post a {
+    text-decoration: none; /* Убираем подчеркивание у ссылки */
+    color: #0070f3; /* Цвет ссылки */
+  }
+  

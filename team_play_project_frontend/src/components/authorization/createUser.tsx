@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import { useDispatch } from "react-redux";
 import { createUser } from "../../features/AuthSlice";
+import { AppDispatch } from "../../app/store";
 //тут регистрация 
 function signUp() {
     //хуки для мониторинга value из input
@@ -13,22 +14,22 @@ function signUp() {
   const dispatch = useDispatch<AppDispatch>();
 
   //функции регистрации
-  const handleSetLogin = (e) => {
+  const handleSetLogin = (e: { target: { value: SetStateAction<string>; }; }) => {
     setLogin(e.target.value);
   };
 
-  const handleSetavatarURL = (e) => {
+  const handleSetavatarURL = (e: { target: { value: SetStateAction<string>; }; }) => {
     setavatarURL(e.target.value);
   };
 
-  const handleSetnickName = (e) => {
+  const handleSetnickName = (e: { target: { value: SetStateAction<string>; }; }) => {
     setnickName(e.target.value);
   };
-  const handleSetPass = (e) => {
+  const handleSetPass = (e: { target: { value: SetStateAction<string>; }; }) => {
     setPassword(e.target.value);
   };
 
-  const handleSignUp = (e) => {
+  const handleSignUp = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     dispatch(createUser({ login, password, nickName, avatarURL }));
   };
