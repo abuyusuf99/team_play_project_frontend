@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, FormEvent } from "react";
-import style from "./FormComments.module.css";
+// import style from "./FormComments.module.css";
 import { AppDispatch } from "../../app/store";
 import { addComment } from "../../features/CommentSlice";
 import { useDispatch } from "react-redux";
@@ -44,25 +44,24 @@ function FormComments({ postId, onSubmit }: CommentsFormProps) {
 
   return (
     <div>
-      <form className={style.form} onSubmit={handleSubmit}>
-        <div className={style.content}>
-          <div className={style.inputContainer}>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <div>
             <input
-              className={style.input}
               type="text"
               placeholder="Write your comment here..."
               value={text}
               onChange={handleChange}
             />
           </div>
-          <div className={style.btnContainer}>
-            <button className={style.btn} type="submit" onClick={handleSubmit}>
+          <div>
+            <button type="submit" onClick={handleSubmit}>
               ADD
             </button>
           </div>
         </div>
       </form>
-      {error && <p className={style.error}>{error}</p>}
+      {error && <p>{error}</p>}
     </div>
   );
 }

@@ -5,12 +5,15 @@ import axios from "axios";
 export interface Post {
   _id: string;
   imageURL: string;
-  document: string,
   title: string;
+  text: string;
   desc: string;
   category: string;
-  viewsCount: number;
+  viewsCount: number; // Изменили тип на number
+  document: string;
+  postId: string
 }
+
 
 export interface PostState {
   posts: Post[];
@@ -20,12 +23,8 @@ export interface PostState {
 
 interface CreatePostArgs {
   title: string;
-  desc: string;
-  category: string;
+  text: string;
   imageURL: string;
-  user: string;
-  document: string;
-  viewsCount: number;
 }
 
 const initialState: PostState = {
@@ -33,10 +32,36 @@ const initialState: PostState = {
   status: "idle",
   error: null,
 };
+export const fetchTopPosts = createAsyncThunk(
+  "posts/fetchTopPosts",
+  async () => {
+    try {
+      const response = await axios.get("http://localhost:4000/post/top", {
+        params: {
+          limit: 3, // Получение топ 3 постов
+        },
+      });
+
+      if (response.status !== 200) {
+        throw new Error("Server error");
+      }
+
+      const data = response.data;
+      return data;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw error;
+      } else {
+        throw new Error("Unexpected error");
+      }
+    }
+  }
+);
+
 
 export const createPost = createAsyncThunk(
   "posts/createPost",
-  async ({ title, desc, imageURL, document,user,category }: CreatePostArgs) => {
+  async ({ title, text, imageURL }: CreatePostArgs) => {
     try {
       const token = localStorage.getItem("token");
       if (!token) {
@@ -45,7 +70,7 @@ export const createPost = createAsyncThunk(
 
       const response = await axios.post(
         "http://localhost:4000/post",
-        {title, imageURL,desc,document,user,category },
+        { title, text, imageURL },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -118,7 +143,6 @@ export const fetchPosts = createAsyncThunk(
   }
 );
 
-
 const postSlice = createSlice({
   name: "posts",
   initialState,
@@ -143,7 +167,7 @@ const postSlice = createSlice({
       })
       .addCase(fetchPostById.fulfilled, (state, action) => {
         state.status = "succeeded";
-        const postIndex = state.posts.findIndex((post) => post._id === action.payload._id);
+        const postIndex = state.posts.findIndex((post: { _id: any; }) => post._id === action.payload._id);
         if (postIndex !== -1) {
           state.posts[postIndex] = action.payload;
         }
@@ -155,6 +179,18 @@ const postSlice = createSlice({
       .addCase(createPost.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.posts.unshift(action.payload);
+      })
+      .addCase(fetchTopPosts.pending, (state) => {
+        state.status = "loading";
+        state.error = null;
+      })
+      .addCase(fetchTopPosts.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.posts = action.payload;
+      })
+      .addCase(fetchTopPosts.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload as string;
       });
   },
 });
