@@ -1,0 +1,44 @@
+*{
+    box-sizing: border-box;
+}
+.inputs{
+    width: 50%;
+    margin: auto;
+
+}
+.rod_block_addpost{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    align-items: center;
+
+}
+.input{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+
+}
+.input button{
+   background-color: #DFDCCF;
+   color: black;
+   border: none;
+   font-size: 20px;
+   padding-right: 0;
+   padding-top: 0;
+   padding-bottom: 0;
+
+   margin-top: 20%;
+   margin-left: 4%;
+}
+.input input{
+    width: 500px;
+    margin-top: 20px;
+    border-radius: 10px;
+    border: 1px solid gray;
+}
+.imgUrl img{
+    width: 150px;
+    height: 150px;
+}
