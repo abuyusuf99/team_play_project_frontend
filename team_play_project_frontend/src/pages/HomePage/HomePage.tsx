@@ -1,6 +1,7 @@
 import React from "react";
 import TopThree from "../../components/TopThree/TopThree";
 import Post from "../../components/Posts/Posts";
+
 function HomePage() {
   return (
     <div className="bg-gray-100 min-h-screen">
@@ -10,15 +11,19 @@ function HomePage() {
         </div>
       </header>
       <div className="container mx-auto py-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          <div className="col-span-2">
-            <TopThree />
-          </div>
-          <div className="col-span-1">
-            <h2 className="text-3xl font-semibold text-gray-800">Посты</h2>
+        <TopThree />
+      </div>
+      <div className="bg-gray-100 min-h-screen">
+      <div className="flex flex-wrap"> {/* Добавлен flex-wrap */}
+        <div className="container mx-auto py-4"> {/* Добавлены классы ширины */}
+        <h2 className="text-3xl font-semibold">Посты</h2>
+          <div className="container mx-auto py-8">
+            <div className="container mx-auto">
+            </div>
             <Post />
           </div>
         </div>
+      </div>
       </div>
     </div>
   );

@@ -8,10 +8,8 @@ import FormComments from "../../components/Comments/CommentsForm";
 import "tailwindcss/tailwind.css";
 
 function FullPost() {
-  const { postId } = useParams<{ postId?: string }>(); // postId теперь может быть undefined
+  const { postId } = useParams<{ postId?: string }>();
   const dispatch = useDispatch<AppDispatch>();
-
-  // Селектор для выборки поста по его ID из Redux store
   const posts = useSelector((state: RootState) => state.postReducer.posts);
 
   useEffect(() => {
@@ -34,15 +32,17 @@ function FullPost() {
         {posts.map(
           (singlePost) =>
             singlePost._id === postId && (
-              <div key={singlePost._id} className="bg-white rounded shadow p-4">
-                <h2 className="text-2xl font-semibold">{singlePost.title}</h2>
+              <div key={singlePost._id} className="bg-white rounded-lg shadow-md p-4">
+                <h2 className="text-3xl font-semibold text-gray-800">{singlePost.title}</h2>
                 <p className="text-gray-600">{singlePost.desc}</p>
                 <p className="text-gray-600">{singlePost.document}</p>
-                <img
-                  src={singlePost.imageURL}
-                  alt="Post"
-                  className="rounded-lg mt-4"
-                />
+                <div className="relative w-80 h-100 mb-4 overflow-hidden rounded-lg"> {/* Обновленные значения для высоты */}
+                  <img
+                    src={singlePost.imageURL}
+                    alt="Post"
+                    className="object-cover w-full h-full" // Используется object-cover для заполнения блока
+                  />
+                </div>
               </div>
             )
         )}
