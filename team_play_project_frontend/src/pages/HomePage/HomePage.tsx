@@ -1,13 +1,12 @@
-// import React from "react";
+import React from "react";
 import TopThree from "../../components/TopThree/TopThree";
 import Post from "../../components/Posts/Posts";
-
 function HomePage() {
   return (
     <div className="bg-gray-100 min-h-screen">
-      <header className="bg-blue-500 text-white py-4">
+      <header className="bg-gray-800 text-white py-4">
         <div className="container mx-auto">
-          <h1 className="text-12312312xl font-semibold">Лучшие посты</h1>
+          <h1 className="text-3xl font-semibold">Лучшие посты</h1>
         </div>
       </header>
       <div className="container mx-auto py-8">
@@ -15,8 +14,8 @@ function HomePage() {
           <div className="col-span-2">
             <TopThree />
           </div>
-          <h2 className="text-3xl font-semibold">Посты</h2>
           <div className="col-span-1">
+            <h2 className="text-3xl font-semibold text-gray-800">Посты</h2>
             <Post />
           </div>
         </div>

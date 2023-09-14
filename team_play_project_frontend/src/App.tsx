@@ -5,7 +5,6 @@ import CreateUser from "./components/authorization/createUser";
 import Login from "./components/authorization/login";
 import style from "./css/app.module.css";
 import FullPost from "./pages/HomePage/FullPostPage";
-
 function App() {
   return (
     <div className={style.app}>
