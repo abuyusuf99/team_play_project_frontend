@@ -45,7 +45,7 @@ export const addComment = createAsyncThunk(
 
       // Отправка POST-запроса на сервер для добавления комментария
       const response = await axios.post(
-        `http://localhost:9000/comment/${postId}`,
+        `http://localhost:4000/comment/${postId}`,
         { text },
         {
           headers: {
@@ -77,7 +77,7 @@ export const fetchComments = createAsyncThunk(
   async (_) => {
     try {
       // Запрос на сервер для загрузки комментариев
-      const response = await axios.get("http://localhost:9000/comments");
+      const response = await axios.get("http://localhost:4000/comments");
 
       if (response.status !== 200) {
         throw new Error("Server error");

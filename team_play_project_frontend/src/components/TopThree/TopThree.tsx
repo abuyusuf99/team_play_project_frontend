@@ -13,8 +13,8 @@ const TopThree: React.FC = () => {
     <div>
       {posts.map((post) => (
         <div key={post._id}>
-          <img src={post.imageURL} alt="*" />
-          <h1>{post.title}</h1>
+          <img  src={post.imageURL} alt="*" />
+          <h1 >{post.title}</h1>
           <p>{post.text}</p>
           <p> ПРОСМОТРЫ: {post.viewsCount}</p>
           <Link to={`/fullpost/${post._id}`}>к тексту</Link>
