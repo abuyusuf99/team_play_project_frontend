@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { AppDispatch } from "../../app/store";
+<<<<<<< HEAD
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import style from "../../css/addPost.module.css";
@@ -10,6 +11,12 @@ import { createPost } from "../../features/PostSlice";
 import img from "../../img/pdf.svg";
 
 import axios from "axios";
+=======
+import { useDispatch } from "react-redux";
+import style from "../../css/addPost.module.css"
+import Dropdown from 'react-bootstrap/Dropdown';
+import "bootstrap/dist/css/bootstrap.min.css";
+>>>>>>> 999d788ee585e48df3bb2645dc89f6566945219a
 function AddPost() {
   const [titl, setTitl] = useState("");
   const [desc, setDesc] = useState("");
@@ -21,12 +28,11 @@ function AddPost() {
   
   
 
-  const dispatch = useDispatch<AppDispatch>();
-  const category = useSelector((state) => state.categoryReducer.category);
+const dispatch = useDispatch<AppDispatch>()
 
-  useEffect(() => {
-    dispatch(fetchCategory());
-  }, []);
+
+
+
 
   const handleAdd = () => {
     category.find((item) => {
@@ -156,8 +162,36 @@ console.log(pdfUrl);
             Добавить
           </button>
         </div>
+
+
+  return (
+    <div className={style.rod_block_addpost}>
+      <div className={style.inputs}>
+        <div className={style.input} ><input onChange={(e)=> setTitl(e.target.value)} type="text" placeholder="Название поста" /></div>
+       <div className={style.input}> <input onChange={(e)=> setDesc(e.target.value)} type="text" placeholder="Описание" /></div>
+       <div className={style.input}> <input  onChange={(e)=> setCateg(e.target.value)}  type="text" placeholder="Категория" /> <Dropdown>
+      <Dropdown.Toggle className={style.butbootstarp} variant="success" id="dropdown-basic">
+        Выбрать
+      </Dropdown.Toggle>
+
+      <Dropdown.Menu>
+        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+        
+      </Dropdown.Menu>
+    </Dropdown></div>
+    <div className={style.input}> <input ref={imgRef}  type="file" hidden /></div>
+
       </div>
-    </>
+      <div className={style.drop}>
+      <button onClick={()=>imgRef.current.click()} >Загрузить фото</button>
+    </div>
+      <div className={style.drop}>
+      <button onClick={()=>docRef.current.click()} >Загрузить документ</button>
+    </div>
+<div className={style.addBut}>
+    <button>Добавить</button>
+    </div>
+    </div>
   );
 }
 
