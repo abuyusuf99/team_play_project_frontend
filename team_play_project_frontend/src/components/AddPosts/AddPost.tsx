@@ -36,7 +36,7 @@ function AddPost() {
       }
     });
   };
-// ff
+
   const handleChangeFile = async (event)=>{
 try {
   const formData = new FormData()
