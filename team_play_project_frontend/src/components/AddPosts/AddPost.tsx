@@ -1,19 +1,25 @@
 import React, { useState } from "react";
-import { AppDispatch, RootState } from "../../app/store";
+import { AppDispatch } from "../../app/store";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import style from "../../css/addPost.module.css";
 import Dropdown from "react-bootstrap/Dropdown";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { fetchCategory } from "../../features/CategorySlice";
-import { createPost, fetchPosts } from "../../features/PostSlice";
+import { createPost } from "../../features/PostSlice";
+import img from "../../img/pdf.svg";
+
 import axios from "axios";
 function AddPost() {
   const [titl, setTitl] = useState("");
   const [desc, setDesc] = useState("");
   const [categ, setCateg] = useState("");
+  const [imgUrl, setimgUrl] = useState("");
+  const [pdfUrl, setPdfUrl] = useState("");
   const imgRef = React.useRef(null);
   const docRef = React.useRef(null);
+  
+  
 
   const dispatch = useDispatch<AppDispatch>();
   const category = useSelector((state) => state.categoryReducer.category);
@@ -25,7 +31,7 @@ function AddPost() {
   const handleAdd = () => {
     category.find((item) => {
       if (item.title === categ) {
-        dispatch(createPost({title:titl,desc:desc,category:item._id,imageURL:imgRef}))
+        dispatch(createPost({title:titl,desc:desc,category:item._id,imageURL:imgUrl,document:pdfUrl}))
 
       }
     });
@@ -37,13 +43,44 @@ try {
   const file =  event.target.files[0]
   formData.append('image', file)
   const { data} = await axios.post('http://localhost:4000/upload/img', formData)
-  console.log(data);
+setimgUrl(`http://localhost:4000${data.url}`)
+
+
+
+
+
+
+
+ 
+  
   
 } catch (error) {
-  console.log(error.message)
+  error
 }
   }
-// kdf
+  const handleChangePdf = async (event)=>{
+try {
+  const formData = new FormData()
+  const file =  event.target.files[0]
+  formData.append('file', file)
+  const { data} = await axios.post('http://localhost:4000/upload', formData)
+setPdfUrl(`http://localhost:4000${data.url}`)
+console.log(pdfUrl);
+
+
+
+
+
+
+
+
+ 
+  
+  
+} catch (error) {
+  error
+}
+  }
   return (
     <>
       <div className={style.rod_block_addpost}>
@@ -97,20 +134,25 @@ try {
           <div className={style.input}>
             {" "}
             <input onChange={handleChangeFile} ref={imgRef} type="file" hidden />
+            <input onChange={handleChangePdf} ref={docRef} type="file" hidden />
           </div>
         </div>
         <div className={style.drop}>
           <button onClick={() => imgRef.current.click()}>Загрузить фото</button>
         </div>
+
+{imgUrl ? <div className={style.imgUrl}><img src={imgUrl} alt="" /></div> : null}
+        
         <div className={style.drop}>
-          <button onClick={() => docRef.current.click()}>
+          <button  onClick={() => docRef.current.click()}>
             Загрузить документ
           </button>
+          {pdfUrl ? <div> <img src={img} alt="" /> <a href={pdfUrl} target={pdfUrl}>Document</a></div> : null }
+         
         </div>
         <div className={style.addBut}>
           <button
-            onClick={handleAdd}
-          >
+            onClick={handleAdd}>
             Добавить
           </button>
         </div>
