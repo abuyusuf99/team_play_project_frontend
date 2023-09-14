@@ -22,7 +22,9 @@ function AddPost() {
   
 
   const dispatch = useDispatch<AppDispatch>();
-  const category = useSelector((state) => state.categoryReducer.category);
+  const category = useSelector((state) => state.Category.category);
+  console.log(category);
+  
 
   useEffect(() => {
     dispatch(fetchCategory());
@@ -44,16 +46,7 @@ try {
   formData.append('image', file)
   const { data} = await axios.post('http://localhost:4000/upload/img', formData)
 setimgUrl(`http://localhost:4000${data.url}`)
-
-
-
-
-
-
-
- 
-  
-  
+    
 } catch (error) {
   error
 }
@@ -66,17 +59,7 @@ try {
   const { data} = await axios.post('http://localhost:4000/upload', formData)
 setPdfUrl(`http://localhost:4000${data.url}`)
 console.log(pdfUrl);
-
-
-
-
-// ll
-
-
-
  
-  
-  
 } catch (error) {
   error
 }
