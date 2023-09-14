@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState, AppDispatch } from "../../app/store";
 import { fetchComments } from "../../features/CommentSlice";
-// import style from './CommentList.module.css'
+import style from './CommentList.module.css'
 interface CommentProps {
     postId: string
   }
@@ -20,21 +20,21 @@ function CommentList({ postId }: CommentProps) {
   }, [dispatch]);
 
   return (
-    <div>
+    <div className={style["comment-list"]}>
       <h3>Comments</h3>
       <ul>
         {comments.map((comment) => (
           // Проверяем, соответствует ли postId комментария postId страницы поста
           comment.post === postId && (
-            <li  key={comment._id}>
-              <div>
+            <li className={style.comment} key={comment._id}>
+              <div className={style["comment-avatar"]}>
                 {/* <img src={comment.avatarURL} alt={`Avatar of ${comment.user}`} /> */}
               </div>
-              <div>
-                <div>
-                  <strong>{comment.user.nickName}</strong>
+              <div className={style["comment-content"]}>
+                <div className={style["comment-username"]}>
+                  <strong>{comment.user.email}</strong>
                 </div>
-                <div>{comment.text}</div>
+                <div className={style["comment-text"]}>{comment.text}</div>
               </div>
             </li>
           )
