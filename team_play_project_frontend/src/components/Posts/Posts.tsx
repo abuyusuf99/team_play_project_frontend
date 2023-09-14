@@ -1,8 +1,6 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState, AppDispatch } from "../../app/store";
-import { fetchPosts } from "../../features/PostSlice";
+import React from 'react';
+import { Link } from 'react-router-dom';
+
 
 const Post: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -13,7 +11,18 @@ const Post: React.FC = () => {
     dispatch(fetchPosts());
   }, [dispatch]);
 
+
+interface PostProps {
+  title: string;
+  text: string;
+  imageURL: string;
+  link: string;
+}
+
+
+const Post: React.FC<PostProps> = ({ title, text, imageURL, link }) => {
   return (
+
     <div className="container mx-auto">
       <div className="flex flex-wrap justify-center">
         {posts.map((post) => (
@@ -42,6 +51,13 @@ const Post: React.FC = () => {
           </div>
         ))}
       </div>
+
+    <div>
+      <img  src={imageURL} alt="*"/>
+      <h1 >{title}</h1>
+      <p >{text}</p>
+      <Link to={link}>к новости</Link>
+
     </div>
   );
 };

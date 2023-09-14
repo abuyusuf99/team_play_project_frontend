@@ -1,9 +1,15 @@
+
 import React from "react";
 import TopThree from "../../components/TopThree/TopThree";
 import Post from "../../components/Posts/Posts";
 
 function HomePage() {
+  const dispatch = useDispatch<AppDispatch>();
+  const posts = useSelector((state: RootState) => state.postReducer.posts);
+  console.log(posts)
+  
   return (
+
     <div className="bg-gray-100 min-h-screen">
       <header className="bg-gray-800 text-white py-4">
         <div className="container mx-auto">
@@ -23,6 +29,7 @@ function HomePage() {
             <Post />
           </div>
         </div>
+
       </div>
       </div>
     </div>
@@ -30,3 +37,4 @@ function HomePage() {
 }
 
 export default HomePage;
+

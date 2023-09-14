@@ -1,3 +1,4 @@
+
 import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../app/store";
@@ -33,7 +34,5 @@ const TopThree: React.FC = () => {
     </div>
   );
 };
-
 export default TopThree;
-
 

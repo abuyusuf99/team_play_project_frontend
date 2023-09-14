@@ -5,15 +5,12 @@ import axios from "axios";
 export interface Post {
   _id: string;
   imageURL: string;
+  document: string,
   title: string;
-  text: string;
   desc: string;
   category: string;
-  viewsCount: number; // Изменили тип на number
-  document: string;
-  postId: string
+  viewsCount: number;
 }
-
 
 export interface PostState {
   posts: Post[];
@@ -23,8 +20,12 @@ export interface PostState {
 
 interface CreatePostArgs {
   title: string;
-  text: string;
+  desc: string;
+  category: string;
   imageURL: string;
+  user: string;
+  document: string;
+  viewsCount: number;
 }
 
 const initialState: PostState = {
@@ -33,10 +34,9 @@ const initialState: PostState = {
   error: null,
 };
 
-
 export const createPost = createAsyncThunk(
   "posts/createPost",
-  async ({ title, text, imageURL }: CreatePostArgs) => {
+  async ({ title, desc, imageURL, document,user,category }: CreatePostArgs) => {
     try {
       const token = localStorage.getItem("token");
       if (!token) {
@@ -45,7 +45,7 @@ export const createPost = createAsyncThunk(
 
       const response = await axios.post(
         "http://localhost:4000/post",
-        { title, text, imageURL },
+        {title, imageURL,desc,document,user,category },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -118,6 +118,7 @@ export const fetchPosts = createAsyncThunk(
   }
 );
 
+
 const postSlice = createSlice({
   name: "posts",
   initialState,
@@ -142,7 +143,7 @@ const postSlice = createSlice({
       })
       .addCase(fetchPostById.fulfilled, (state, action) => {
         state.status = "succeeded";
-        const postIndex = state.posts.findIndex((post: { _id: any; }) => post._id === action.payload._id);
+        const postIndex = state.posts.findIndex((post) => post._id === action.payload._id);
         if (postIndex !== -1) {
           state.posts[postIndex] = action.payload;
         }
@@ -154,7 +155,7 @@ const postSlice = createSlice({
       .addCase(createPost.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.posts.unshift(action.payload);
-      })
+      });
   },
 });
 
